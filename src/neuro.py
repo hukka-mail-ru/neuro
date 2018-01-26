@@ -1,61 +1,31 @@
 import math
 import sys
 
+
 def sigmoid(x: float):
     return 1.0 / (1.0 + math.exp(-x))
 
-w1 = .15
-w2 = .20 
-w3 = .25 
-w4 = .30 
-w5 = .40 
-w6 = .45
-w7 = .50
-w8 = .55
 
-b1 = .35
-b2 = .60
-
-n = 10.0 # learning speed
-
-
-
-''' 1  '''
-i1 = .05
-i2 = .10
-
-
-target_o1 = .01
-target_o2 = .99
-
-'''
-olddw1 = 0 
-olddw2 = 0 
-olddw3 = 0 
-olddw4 = 0 
-sumKv = 0
-'''
-
-for x in range(1, 100):
-
-    net_h1 = (w1 * i1) + (w2 * i2) + (b1 * 1)
+def learn(i1: float, i2: float, target_o1: float, target_o2: float):
+    net_h1 = (learn.w1 * i1) + (learn.w2 * i2) + (b1 * 1)
     out_h1 = sigmoid(net_h1)
     
-    print("out_h1", out_h1)
+    print("learn", i1, i2, target_o1, target_o2)
+   # print("out_h1", out_h1)
     
-    net_h2 = (w3 * i1) + (w4 * i2) + (b1 * 1)
+    net_h2 = (learn.w3 * i1) + (learn.w4 * i2) + (b1 * 1)
     out_h2 = sigmoid(net_h2)
     
-    print("out_h2", out_h2)
+   # print("out_h2", out_h2)
     
     
-    net_o1 = (w5 * out_h1) + (w6 * out_h2) + (b2 * 1)
+    net_o1 = (learn.w5 * out_h1) + (learn.w6 * out_h2) + (b2 * 1)
     out_o1 = sigmoid(net_o1)
     
     print("----------------")
     print("out_o1", out_o1)
     
-    net_o2 = (w7 * out_h1) + (w8 * out_h2) + (b2 * 1)
+    net_o2 = (learn.w7 * out_h1) + (learn.w8 * out_h2) + (b2 * 1)
     out_o2 = sigmoid(net_o2)
     
     print("out_o2", out_o2)
@@ -73,42 +43,75 @@ for x in range(1, 100):
     dw7 = (out_o2 - target_o2) * out_o2 * (1 - out_o2) * out_h1
     dw8 = (out_o2 - target_o2) * out_o2 * (1 - out_o2) * out_h2
    
-    dEtotal_dout_h1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * w5 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * w7
+    dEtotal_dout_h1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * learn.w5 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * learn.w7
    
     dw1 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i1
     dw2 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i2
     
-    w1 = w1 - n * dw1
-    w2 = w2 - n * dw2
+    learn.w1 = learn.w1 - n * dw1
+    learn.w2 = learn.w2 - n * dw2
     
     
     
-    dEtotal_dout_h2 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * w7 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * w8
+    dEtotal_dout_h2 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * learn.w7 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * learn.w8
    
     dw3 = dEtotal_dout_h2 * out_h2 * (1 - out_h2) * i1
     dw4 = dEtotal_dout_h2 * out_h2 * (1 - out_h2) * i2
     
-    w3 = w3 - n * dw3
-    w4 = w4 - n * dw4
+    learn.w3 = learn.w3 - n * dw3
+    learn.w4 = learn.w4 - n * dw4
    
+    '''    
     print("dEtotal_dout_h1" , dEtotal_dout_h1)
-    print("w1+" , w1)
-    print("w2+" , w2)
-    print("w3+" , w3)
-    print("w4+" , w4)
+    print("learn.w1+" , learn.w1)
+    print("learn.w2+" , learn.w2)
+    print("learn.w3+" , learn.w3)
+    print("learn.w4+" , learn.w4)
+    '''
    
-    w5 = w5 - n * dw5
-    w6 = w6 - n * dw6
-    w7 = w7 - n * dw7
-    w8 = w8 - n * dw8
-        
-    print("w5+", w5)
-    print("w6+", w6)
-    print("w7+", w7)
-    print("w8+", w8)
-
+    learn.w5 = learn.w5 - n * dw5
+    learn.w6 = learn.w6 - n * dw6
+    learn.w7 = learn.w7 - n * dw7
+    learn.w8 = learn.w8 - n * dw8
+     
+    '''    
+    print("learn.w5+", learn.w5)
+    print("learn.w6+", learn.w6)
+    print("learn.w7+", learn.w7)
+    print("learn.w8+", learn.w8)
+    '''
     
-    print("\n")
+    print("\n")    
+
+
+
+''' main '''
+
+learn.w1 = .15
+learn.w2 = .20 
+learn.w3 = .25 
+learn.w4 = .30 
+learn.w5 = .40 
+learn.w6 = .45
+learn.w7 = .50
+learn.w8 = .55
+
+b1 = .35
+b2 = .60
+
+n = 10.0 # learning speed
+
+
+for x in range(1, 10000):
+
+    learn(0, 1, 0, 1)
+    learn(1, 0, 0, 1)
+    learn(1, 1, 1, 0)    
+    learn(0, 0, 0, 0)
+    #learn(.05, .10, .01, .99)
+
+
+
 
 
 
