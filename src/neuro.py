@@ -1,89 +1,114 @@
 import math
-
+import sys
 
 def sigmoid(x: float):
     return 1.0 / (1.0 + math.exp(-x))
 
-w1=0.45
-w2=0.78 
-w3=-0.12 
-w4=0.13 
-w5=1.5 
-w6=-2.3
+w1 = .15
+w2 = .20 
+w3 = .25 
+w4 = .30 
+w5 = .40 
+w6 = .45
+w7 = .50
+w8 = .55
 
-E = 0.5
-A = 0
+b1 = .35
+b2 = .60
+
+n = 10.0 # learning speed
+
 
 
 ''' 1  '''
-I1 = 1
-I2 = 0
-expectedO1 = 1
+i1 = .05
+i2 = .10
 
 
+target_o1 = .01
+target_o2 = .99
+
+'''
 olddw1 = 0 
 olddw2 = 0 
 olddw3 = 0 
 olddw4 = 0 
 sumKv = 0
+'''
 
 for x in range(1, 100):
 
-    H1input = (I1 * w1) + (I2 * w3)
-    H1 = sigmoid(H1input)
+    net_h1 = (w1 * i1) + (w2 * i2) + (b1 * 1)
+    out_h1 = sigmoid(net_h1)
     
-    H2input = (I1 * w2) + (I2 * w4)
-    H2 = sigmoid(H2input)
+    print("out_h1", out_h1)
     
-    O1input = (H1 * w5) + (H2 * w6)
-    O1 = sigmoid(O1input)
+    net_h2 = (w3 * i1) + (w4 * i2) + (b1 * 1)
+    out_h2 = sigmoid(net_h2)
     
-    print("O1", O1)
-    
-    ''' error '''
-    
-    sumKv += (expectedO1 - O1)**2
-    e = sumKv  / x
-    print("e", e)
-    print("------------")
+    print("out_h2", out_h2)
     
     
+    net_o1 = (w5 * out_h1) + (w6 * out_h2) + (b2 * 1)
+    out_o1 = sigmoid(net_o1)
+    
+    print("----------------")
+    print("out_o1", out_o1)
+    
+    net_o2 = (w7 * out_h1) + (w8 * out_h2) + (b2 * 1)
+    out_o2 = sigmoid(net_o2)
+    
+    print("out_o2", out_o2)
+    print("----------------")
+    
+    Etotal = 1/2 * (target_o1 - out_o1)**2 + 1/2 * (target_o2 - out_o2)**2
+    
+    print("Etotal", Etotal)
+    
+        
     ''' backpropagate '''
     
-    dO1 = (expectedO1 - O1) * (1 - O1) * O1
-    
-    dH1 = (1 - H1) * H1 * (w5 * dO1)
-    GRADw5 = H1 * dO1
-    dw5 = E * GRADw5 + A * 0
-    w5 += dw5
-    
-    
-    dH2 = (1 - H2) * H2 * (w6 * dO1)
-    GRADw6 = H2 * dO1
-    dw6 = E * GRADw6 + A * 0
-    w6 += dw6
-    
-    
+    dw5 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * out_h1
+    dw6 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * out_h2
+    dw7 = (out_o2 - target_o2) * out_o2 * (1 - out_o2) * out_h1
+    dw8 = (out_o2 - target_o2) * out_o2 * (1 - out_o2) * out_h2
    
-    GRADw1 = I1 * dH1
-    dw1 = E * GRADw1 + A * 0
-    olddw1 = dw1
-    w1 += dw1
+    dEtotal_dout_h1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * w5 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * w7
+   
+    dw1 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i1
+    dw2 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i2
     
-    GRADw2 = I1 * dH2
-    dw2 = E * GRADw2 + A * 0
-    olddw2 = dw2
-    w2 += dw2
+    w1 = w1 - n * dw1
+    w2 = w2 - n * dw2
     
-    GRADw3 = I2 * dH1
-    dw3 = E * GRADw3 + A * 0
-    olddw3 = dw3
-    w3 += dw3
     
-    GRADw4 = I2 * dH2
-    dw4 = E * GRADw4 + A * 0
-    olddw4 = dw4
-    w4 += dw4
+    
+    dEtotal_dout_h2 = (out_o1 - target_o1) * out_o1 * (1 - out_o1) * w7 + (out_o2 - target_o2) * out_o2 * (1 - out_o2) * w8
+   
+    dw3 = dEtotal_dout_h2 * out_h2 * (1 - out_h2) * i1
+    dw4 = dEtotal_dout_h2 * out_h2 * (1 - out_h2) * i2
+    
+    w3 = w3 - n * dw3
+    w4 = w4 - n * dw4
+   
+    print("dEtotal_dout_h1" , dEtotal_dout_h1)
+    print("w1+" , w1)
+    print("w2+" , w2)
+    print("w3+" , w3)
+    print("w4+" , w4)
+   
+    w5 = w5 - n * dw5
+    w6 = w6 - n * dw6
+    w7 = w7 - n * dw7
+    w8 = w8 - n * dw8
+        
+    print("w5+", w5)
+    print("w6+", w6)
+    print("w7+", w7)
+    print("w8+", w8)
+
+    
+    print("\n")
 
 
 
