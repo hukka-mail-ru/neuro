@@ -7,32 +7,33 @@ def sigmoid(x: float):
 
 
 def learn(i1: float, i2: float, target_o1: float, target_o2: float):
+    
     net_h1 = (learn.w1 * i1) + (learn.w2 * i2) + (b1 * 1)
     out_h1 = sigmoid(net_h1)
     
-    print("learn ", i1, i2, "->", target_o1, target_o2)
-   # print("out_h1", out_h1)
     
     net_h2 = (learn.w3 * i1) + (learn.w4 * i2) + (b1 * 1)
     out_h2 = sigmoid(net_h2)
-    
-   # print("out_h2", out_h2)
-    
+
     
     net_o1 = (learn.w5 * out_h1) + (learn.w6 * out_h2) + (b2 * 1)
     out_o1 = sigmoid(net_o1)
     
-    print("----------------")
-    print("out_o1 %.2f" % out_o1)
-    
     net_o2 = (learn.w7 * out_h1) + (learn.w8 * out_h2) + (b2 * 1)
     out_o2 = sigmoid(net_o2)
     
-    print("out_o2 %.2f" % out_o2)
-    print("----------------")
-    
+    print("net_h1", net_h1)
+    print("net_h1", net_h2)
+    print("net_h1", net_o1)
+    print("net_h1", net_o2)
+      
     Etotal = 1/2 * (target_o1 - out_o1)**2 + 1/2 * (target_o2 - out_o2)**2
-    
+      
+    print("learn ", i1, i2, "->", target_o1, target_o2)  
+    print("----------------")
+    print("out_o1 %.2f" % out_o1)
+    print("out_o2 %.2f" % out_o2)
+    print("----------------")    
     print("Etotal %.8f" % Etotal)
     
         
@@ -66,20 +67,17 @@ def learn(i1: float, i2: float, target_o1: float, target_o2: float):
     learn.w8 = learn.w8 - n * dw8
      
         
-    '''    
+    #'''    
     print("dEtotal_dout_h1" , dEtotal_dout_h1)
-    print("learn.w1+" , learn.w1)
-    print("learn.w2+" , learn.w2)
-    print("learn.w3+" , learn.w3)
-    print("learn.w4+" , learn.w4)
-    '''
-   
-    '''    
-    print("learn.w5+", learn.w5)
-    print("learn.w6+", learn.w6)
-    print("learn.w7+", learn.w7)
-    print("learn.w8+", learn.w8)
-    '''
+    print("learn.w1" , learn.w1)
+    print("learn.w2" , learn.w2)
+    print("learn.w3" , learn.w3)
+    print("learn.w4" , learn.w4)  
+    print("learn.w5", learn.w5)
+    print("learn.w6", learn.w6)
+    print("learn.w7", learn.w7)
+    print("learn.w8", learn.w8)
+    #'''
     
     print("\n")    
 
@@ -97,19 +95,20 @@ learn.w7 = .50
 learn.w8 = .55
 
 b1 = .35
-b2 = .60
+b2 = 0.60
 
 n = 10.0 # learning speed
 
-
 for x in range(1, 1000):
 
-    print(x)
+#   print(x)
 
-    learn(0, 1, 0, 1)
-    learn(1, 0, 1, 0)
+    learn(1, 1, 0, 1)
+#    learn(1, 0, 1, 0)
+    
+    
     learn(1, 1, 1, 1)    
-    learn(0, 0, 0, 0)
+    #learn(0, 0, 0, 0)
     #learn(.05, .10, .01, .99)
 
 
