@@ -25,11 +25,18 @@ class Sinaps():
     def setWeight(self, w):
         self.weight = w
         
-    def setParentNeuron(self, neuron):
-        self.parentNeuron = neuron  
+    def setStartNeuron(self, neuron):
+        self.startNeuron = neuron  
+            
+    def getStartNeuron(self):
+        return self.startNeuron  
     
-    def getParentNeuron(self):
-        return self.parentNeuron  
+    
+    def setEndNeuron(self, neuron):
+        self.endNeuron = neuron          
+    
+    def getEndNeuron(self):
+        return self.endNeuron  
 
 class Neuron():
     
@@ -54,10 +61,11 @@ class Neuron():
         
         for s in inSinapses:
             self.inSinapses.append(s)   
+            s.setEndNeuron(self)
                  
         for s in outSinapses:
             self.outSinapses.append(s)
-            s.setParentNeuron(self)
+            s.setStartNeuron(self)
 
      
     def setB(self, b: float):
@@ -72,7 +80,7 @@ class Neuron():
     def getOut(self):
         net = self.b
         for sinaps in self.inSinapses:
-            net += sinaps.getWeight() * sinaps.getParentNeuron().getValue()    
+            net += sinaps.getWeight() * sinaps.getStartNeuron().getValue()    
         self.value = sigmoid(net)
         return self.value
  
