@@ -42,12 +42,12 @@ class Sinaps():
 
 class Neuron():
     
-    def __init__(self, layer):        
+    def __init__(self, name):        
         self.value = 0
         self.b = 0
         self.inSinapses = []
         self.outSinapses = []
-        self.layer = layer
+        self.name = name
 
     def getName(self):
         return self.name
@@ -57,7 +57,6 @@ class Neuron():
     
     def getValue(self):
         return self.value
-
     
     def addOutSinaps(self, sinaps):
         self.outSinapses.append(sinaps)
@@ -74,20 +73,9 @@ class Neuron():
         return self.inSinapses
 
 
-    def setColor(self, r, g, b):
-        self.r = r
-        self.g = g
-        self.b = b       
-
-    def getColor(self):
-        return (self.r, self.g, self.b)
-
     def setPos(self, x, y):
         self.x = x
         self.y = y
-    
-    def getRect(self):
-        return (self.x, self.y, 10, 10) 
     
     def getPos(self):
         return (self.x, self.y)
@@ -119,14 +107,12 @@ if __name__ == '__main__': # pragma: no cover
     for x in range (0, 5):
         i = Neuron("i")
         i.setPos(100, 10 + 50*x)
-        i.setColor(255, 255, 255)
         iNeurons.append(i)
         
     hNeurons = [] 
     for x in range (0, 3):
         h = Neuron("h")
         h.setPos(200, 10 + 50*x)
-        h.setColor(255, 255, 0)
         h.setB(b1)
         hNeurons.append(h)
     
@@ -134,7 +120,6 @@ if __name__ == '__main__': # pragma: no cover
     for x in range (0, 5):
         o = Neuron("o")
         o.setPos(300, 10 + 50*x)
-        o.setColor(255, 0, 255)
         o.setB(b2)
         oNeurons.append(o)
     
@@ -160,8 +145,17 @@ if __name__ == '__main__': # pragma: no cover
     
 
     for n in neurons:
-        color = n.getColor()
-        pygame.draw.rect(screen, color, pygame.Rect(n.getRect()))
+        
+        color = (255, 255, 255)
+        if n.getName() == "i":
+            color = (255, 255, 255)
+        elif n.getName() == "h":   
+            color = (255, 255, 0)
+        elif n.getName() == "o":   
+            color = (255, 0, 255)  
+            
+        (x, y) = n.getPos()
+        pygame.draw.rect(screen, color, pygame.Rect(x, y, 10, 10))
         for s in n.getOutSinapses():
             color = (255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())           
             pygame.draw.line(screen, color, s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
