@@ -6,6 +6,7 @@ Created on Jan 31, 2018
 import math
 import sys
 import pygame
+import random
 
 def sigmoid(x: float):
     return 1.0 / (1.0 + math.exp(-x))
@@ -68,16 +69,10 @@ class Neuron():
         
     def getOutSinapses(self):
         return self.outSinapses
+    
+    def getInSinapses(self):
+        return self.inSinapses
 
-    def addSinapses(self, inSinapses, outSinapses):
-        
-        for s in inSinapses:
-            self.inSinapses.append(s)   
-            s.setEndNeuron(self)
-                 
-        for s in outSinapses:
-            self.outSinapses.append(s)
-            s.setStartNeuron(self)
 
     def setColor(self, r, g, b):
         self.r = r
@@ -92,7 +87,7 @@ class Neuron():
         self.y = y
     
     def getRect(self):
-        return pygame.Rect(self.x, self.y, 10, 10) 
+        return (self.x, self.y, 10, 10) 
     
     def getPos(self):
         return (self.x, self.y)
@@ -116,56 +111,61 @@ class Neuron():
 
 if __name__ == '__main__': # pragma: no cover
 
-    neurons = []
+    b1 = .35
+    b2 = 0.60            
+    n = 10.0 # learning speed
+   
     iNeurons = [] 
     for x in range (0, 5):
         i = Neuron("i")
         i.setPos(100, 10 + 50*x)
         i.setColor(255, 255, 255)
         iNeurons.append(i)
-        neurons.append(i)
         
     hNeurons = [] 
-    for x in range (0, 10):
+    for x in range (0, 3):
         h = Neuron("h")
         h.setPos(200, 10 + 50*x)
         h.setColor(255, 255, 0)
+        h.setB(b1)
         hNeurons.append(h)
-        neurons.append(h)
     
     oNeurons = [] 
-    for x in range (0, 7):
+    for x in range (0, 5):
         o = Neuron("o")
         o.setPos(300, 10 + 50*x)
         o.setColor(255, 0, 255)
+        o.setB(b2)
         oNeurons.append(o)
-        neurons.append(o)
     
+    neurons = iNeurons + hNeurons + oNeurons
     
     for i in iNeurons:
         for h in hNeurons:
-            f = Sinaps("f", 0.1)
+            f = Sinaps("f", random.random() / 3)
             i.addOutSinaps(f)
             h.addInSinaps(f)
     
     for h in hNeurons:
         for o in oNeurons:
-            w = Sinaps("f", 0.1)
+            w = Sinaps("w", random.random() / 3)
             h.addOutSinaps(w)
             o.addInSinaps(w)
+     
              
     ''' output ''' 
      
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     
+
     for n in neurons:
         color = n.getColor()
-        pygame.draw.rect(screen, color, n.getRect())
-        for s in n.getOutSinapses():             
+        pygame.draw.rect(screen, color, pygame.Rect(n.getRect()))
+        for s in n.getOutSinapses():
+            color = (255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())           
             pygame.draw.line(screen, color, s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
-    
-     
+
     
     pygame.display.flip()
 
