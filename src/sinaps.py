@@ -31,3 +31,10 @@ class Sinaps():
     
     def getEndNeuron(self):
         return self.endNeuron  
+    
+        
+    def setDs(self, d):
+        self.ds = d
+        
+    def getDs(self):
+        return self.ds

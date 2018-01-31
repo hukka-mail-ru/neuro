@@ -28,6 +28,12 @@ class Neuron():
     def getValue(self):
         return self.value
     
+    def setTarget(self, t: float):
+        self.target = t
+    
+    def getTarget(self):
+        return self.target
+    
     def addOutSinaps(self, sinaps):
         self.outSinapses.append(sinaps)
         sinaps.setStartNeuron(self)
@@ -41,6 +47,12 @@ class Neuron():
     
     def getInSinapses(self):
         return self.inSinapses
+
+    def setdEtotal_dout(self, d):
+        self.dEtotal_dout = d
+        
+    def getdEtotal_dout(self):
+        return self.dEtotal_dout
 
 
     def setPos(self, x, y):
