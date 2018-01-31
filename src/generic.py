@@ -3,97 +3,13 @@ Created on Jan 31, 2018
 
 @author: hukka
 '''
-import math
-import sys
+
 import pygame
 import random
 
-def sigmoid(x: float):
-    return 1.0 / (1.0 + math.exp(-x))
+import neuron
+import sinaps
 
-
-class Sinaps():
-    
-    def __init__(self, name, weight):  
-        self.weight = weight
-        self.name = name
-    
-    def getName(self):
-        return self.name
-            
-    def getWeight(self):
-        return self.weight
-    
-    def setWeight(self, w):
-        self.weight = w
-        
-    def setStartNeuron(self, neuron):
-        self.startNeuron = neuron  
-            
-    def getStartNeuron(self):
-        return self.startNeuron  
-    
-    
-    def setEndNeuron(self, neuron):
-        self.endNeuron = neuron          
-    
-    def getEndNeuron(self):
-        return self.endNeuron  
-
-class Neuron():
-    
-    def __init__(self, name):        
-        self.value = 0
-        self.b = 0
-        self.inSinapses = []
-        self.outSinapses = []
-        self.name = name
-
-    def getName(self):
-        return self.name
-    
-    def setValue(self, v: float):
-        self.value = v
-    
-    def getValue(self):
-        return self.value
-    
-    def addOutSinaps(self, sinaps):
-        self.outSinapses.append(sinaps)
-        sinaps.setStartNeuron(self)
-    
-    def addInSinaps(self, sinaps):
-        self.inSinapses.append(sinaps)
-        sinaps.setEndNeuron(self)
-        
-    def getOutSinapses(self):
-        return self.outSinapses
-    
-    def getInSinapses(self):
-        return self.inSinapses
-
-
-    def setPos(self, x, y):
-        self.x = x
-        self.y = y
-    
-    def getPos(self):
-        return (self.x, self.y)
-     
-    def setB(self, b: float):
-        self.b =b
-
-    def show(self): 
-        for s in self.inSinapses:
-            print("in: ", s.getWeight())
-        for s in self.outSinapses:
-            print("out: ", s.getWeight())
- 
-    def calcValue(self):
-        net = self.b
-        for sinaps in self.inSinapses:
-            net += sinaps.getWeight() * sinaps.getStartNeuron().getValue()    
-        self.value = sigmoid(net)
  
 iNeurons = [] 
 hNeurons = [] 
@@ -128,12 +44,16 @@ def learn(i1v: float, i2v: float, target_o1: float, target_o2: float):
         
     # backpropagate 
     
-    delta_o1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1)
-    delta_o2 = (out_o2 - target_o2) * out_o2 * (1 - out_o2)
-       
-    dEtotal_dout_h1 = delta_o1 * w5.getWeight() + delta_o2 * w7.getWeight()
-    dEtotal_dout_h2 = delta_o1 * w7.getWeight() + delta_o2 * w8.getWeight()
-       
+    for h in hNeurons:
+        dEtotal_dout = 0
+        for o in oNeurons:
+            dEtotal_dout += o.getDelta() * h.getSinapsTo(o).getWeight()
+        h.setdEtotal_dout(dEtotal_dout)
+     
+     
+   # for i in iNeurons:
+   #     for s in i.getOutSinapses():
+   #         ds = 
        
     dw1 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i1.getValue()
     dw2 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i2.getValue()
@@ -166,20 +86,20 @@ if __name__ == '__main__': # pragma: no cover
    
             
     for x in range (0, 2):
-        i = Neuron("i")
+        i = neuron.Neuron("i")
         i.setPos(100, 10 + 50*x)
         iNeurons.append(i)
         
 
     for x in range (0, 2):
-        h = Neuron("h")
+        h = neuron.Neuron("h")
         h.setPos(200, 10 + 50*x)
         h.setB(b1)
         hNeurons.append(h)
     
 
     for x in range (0, 2):
-        o = Neuron("o")
+        o = neuron.Neuron("o")
         o.setPos(300, 10 + 50*x)
         o.setB(b2)
         oNeurons.append(o)
@@ -188,13 +108,13 @@ if __name__ == '__main__': # pragma: no cover
     
     for i in iNeurons:
         for h in hNeurons:
-            f = Sinaps("f", random.random() / 2)
+            f = sinaps.Sinaps("f", random.random() / 2)
             i.addOutSinaps(f)
             h.addInSinaps(f)
     
     for h in hNeurons:
         for o in oNeurons:
-            w = Sinaps("w", random.random() / 2)
+            w = sinaps.Sinaps("w", random.random() / 2)
             h.addOutSinaps(w)
             o.addInSinaps(w)
      
