@@ -7,8 +7,7 @@ Created on Jan 31, 2018
 import pygame
 import random
 
-import neuron
-import sinaps
+import brain
 
  
 iNeurons = [] 
@@ -105,7 +104,7 @@ if __name__ == '__main__': # pragma: no cover
    
             
     for x in range (0, 2):
-        i = neuron.Neuron("i")
+        i = brain.Neuron("i")
         i.setPos(100, 10 + 50*x)
         iNeurons.append(i)
      
@@ -113,14 +112,14 @@ if __name__ == '__main__': # pragma: no cover
    # print("d", iNeurons[0].getValue())    
 
     for x in range (0, 4):
-        h = neuron.Neuron("h")
+        h = brain.Neuron("h")
         h.setPos(200, 10 + 50*x)
         h.setB(b1)
         hNeurons.append(h)
     
 
     for x in range (0, 2):
-        o = neuron.Neuron("o")
+        o = brain.Neuron("o")
         o.setPos(300, 10 + 50*x)
         o.setB(b2)
         oNeurons.append(o)
@@ -131,13 +130,13 @@ if __name__ == '__main__': # pragma: no cover
     
     for i in iNeurons:
         for h in hNeurons:
-            f = sinaps.Sinaps("f", random.random() / 2)
+            f = brain.Sinaps("f", random.random() / 2)
             i.addOutSinaps(f)
             h.addInSinaps(f)
     
     for h in hNeurons:
         for o in oNeurons:
-            w = sinaps.Sinaps("w", random.random() / 2)
+            w = brain.Sinaps("w", random.random() / 2)
             h.addOutSinaps(w)
             o.addInSinaps(w)
             
