@@ -197,15 +197,16 @@ if __name__ == '__main__': # pragma: no cover
         
         color = (255, 255, 255)
         if n.getName() == "i":
-            color = (255, 255, 255)
+            color = (0, 0, 255)
         elif n.getName() == "h":   
-            color = (255, 255, 0)
+            color = (255, 0, 0)
         elif n.getName() == "o":   
-            color = (255, 0, 255)  
+            color = (0, 255, 0)  
             
         (x, y) = n.getPos()
        # pygame.draw.rect(screen, color, pygame.Rect(x, y, 10, 10))
         pygame.draw.circle(screen, color, n.getPos(), 10)
+        pygame.draw.circle(screen, (255,255,255), (x-4,y-4), 2)
         for s in n.getOutSinapses():
             if s.getWeight() < 0:
                 color = (10, 10, 10)
