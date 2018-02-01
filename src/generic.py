@@ -204,7 +204,8 @@ if __name__ == '__main__': # pragma: no cover
             color = (255, 0, 255)  
             
         (x, y) = n.getPos()
-        pygame.draw.rect(screen, color, pygame.Rect(x, y, 10, 10))
+       # pygame.draw.rect(screen, color, pygame.Rect(x, y, 10, 10))
+        pygame.draw.circle(screen, color, n.getPos(), 10)
         for s in n.getOutSinapses():
             if s.getWeight() < 0:
                 color = (10, 10, 10)
