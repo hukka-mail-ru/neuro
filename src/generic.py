@@ -26,14 +26,17 @@ def learn():
     
     for h in hNeurons: 
         h.calcValue()
+        print("h.value", h.getValue())
 
     for o in oNeurons: 
         o.calcValue()
+        print("o.value", o.getValue())
     
     Etotal = 0
     for o in oNeurons:
         Etotal += 1/2 * (o.getTarget() - o.getValue())**2
     
+    print("Etotal",Etotal)
       
    # print("learn ", i1v, i2v, "->", target_o1, target_o2)  
     print("----------------")
@@ -51,13 +54,20 @@ def learn():
    # dEtotal_dout_h1 = delta_o1 * w5.getWeight() + delta_o2 * w7.getWeight()
    # dEtotal_dout_h2 = delta_o1 * w7.getWeight() + delta_o2 * w8.getWeight()
     
+    print("getDelta " , oNeurons[0].getDelta())
+    print("getDelta " , oNeurons[1].getDelta())
     
     for h in hNeurons:
         dEtotal_dout = 0
         for s in h.getOutSinapses():  
             dEtotal_dout += s.getEndNeuron().getDelta() * s.getWeight()
+            print("delta " , s.getEndNeuron().getDelta())
+            print("* w " , s.getWeight())
+            print("res" , )
         h.setdEtotal_dout(dEtotal_dout)
      
+    print("dEtotal_dout_h1 " , hNeurons[0].getdEtotal_dout())
+    print("dEtotal_dout_h1 " , hNeurons[1].getdEtotal_dout()) 
      
     for h in hNeurons:
         
@@ -100,9 +110,9 @@ if __name__ == '__main__': # pragma: no cover
         iNeurons.append(i)
      
 
-    print("d", iNeurons[0].getValue())    
+   # print("d", iNeurons[0].getValue())    
 
-    for x in range (0, 2):
+    for x in range (0, 4):
         h = neuron.Neuron("h")
         h.setPos(200, 10 + 50*x)
         h.setB(b1)
@@ -118,7 +128,7 @@ if __name__ == '__main__': # pragma: no cover
     neurons = iNeurons + hNeurons + oNeurons
     
     
-    '''
+    
     for i in iNeurons:
         for h in hNeurons:
             f = sinaps.Sinaps("f", random.random() / 2)
@@ -130,8 +140,27 @@ if __name__ == '__main__': # pragma: no cover
             w = sinaps.Sinaps("w", random.random() / 2)
             h.addOutSinaps(w)
             o.addInSinaps(w)
-    ''' 
-          
+            
+    '''
+    
+    iNeurons[0].outSinapses[0].weight = .15   
+    iNeurons[1].outSinapses[0].weight  = .20
+    iNeurons[0].outSinapses[1].weight  = .25 
+    iNeurons[1].outSinapses[1].weight  = .30 
+    hNeurons[0].outSinapses[0].weight  = .40 
+    hNeurons[1].outSinapses[0].weight  = .45 
+    hNeurons[0].outSinapses[1].weight  = .50 
+    hNeurons[1].outSinapses[1].weight = .55
+    '''
+    print(iNeurons[0].outSinapses[0].getWeight())    
+    print(iNeurons[0].outSinapses[1].getWeight())  
+    print(iNeurons[1].outSinapses[0].getWeight())  
+    print(iNeurons[1].outSinapses[1].getWeight())  
+    print(hNeurons[0].outSinapses[0].getWeight())  
+    print(hNeurons[0].outSinapses[1].getWeight())  
+    print(hNeurons[1].outSinapses[0].getWeight())  
+    print(hNeurons[1].outSinapses[1].getWeight())      
+              
     for x in range(1, 200):
     
         print("ONE")
@@ -145,12 +174,13 @@ if __name__ == '__main__': # pragma: no cover
         
         print("TWO")
         iNeurons[0].setValue(1)
-        iNeurons[1].setValue(1)
+        iNeurons[1].setValue(0)
         
         oNeurons[0].setTarget(1)
-        oNeurons[1].setTarget(1)
+        oNeurons[1].setTarget(0)
                 
-        learn()       
+        learn()    
+         
         #    learn(1, 0, 1, 0)
              
           
@@ -182,8 +212,7 @@ if __name__ == '__main__': # pragma: no cover
                 color = (255, 255, 255)
             else:
                 color = (255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())      
-                
-            print("color:", 255 * s.getWeight())         
+      
             pygame.draw.line(screen, color, s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
 
     

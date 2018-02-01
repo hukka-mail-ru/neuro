@@ -104,11 +104,18 @@ def learn(i1v: float, i2v: float, target_o1: float, target_o2: float):
         
     out_h1 = h1.getOut()
     out_h2 = h2.getOut()
+    
+    print("out_h1 ", out_h1)
+    print("out_h2 ", out_h2)
 
     out_o1 = o1.getOut()
     out_o2 = o2.getOut()
     
+    print("out_o1 ", out_o1)
+    print("out_o2 ", out_o2)
+    
     Etotal = 1/2 * (target_o1 - out_o1)**2 + 1/2 * (target_o2 - out_o2)**2
+      
       
     print("learn ", i1v, i2v, "->", target_o1, target_o2)  
     print("----------------")
@@ -122,10 +129,19 @@ def learn(i1v: float, i2v: float, target_o1: float, target_o2: float):
     
     delta_o1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1)
     delta_o2 = (out_o2 - target_o2) * out_o2 * (1 - out_o2)
+     
+    print("delta_o1 ", delta_o1)
+    print("delta_o2 ", delta_o2) 
        
     dEtotal_dout_h1 = delta_o1 * w5.getWeight() + delta_o2 * w7.getWeight()
-    dEtotal_dout_h2 = delta_o1 * w7.getWeight() + delta_o2 * w8.getWeight()
-       
+    dEtotal_dout_h2 = delta_o1 * w6.getWeight() + delta_o2 * w8.getWeight()
+    
+    print("dEtotal_dout_h1 ", dEtotal_dout_h1)
+    print("delta_o1 ", delta_o1)
+    print("w6.getWeight ", w6.getWeight())
+    print("delta_o2 ", delta_o2)
+    print("w8.getWeight ", w8.getWeight())
+    print("dEtotal_dout_h2 ", dEtotal_dout_h2)    
        
     dw1 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i1.getValue()
     dw2 = dEtotal_dout_h1 * out_h1 * (1 - out_h1) * i2.getValue()
@@ -177,12 +193,12 @@ if __name__ == '__main__': # pragma: no cover
         
 
 
-    for x in range(1, 1000):
+    for x in range(1, 200):
     
     #   print(x)
     
         learn(1, 1, 0, 1)
-    #    learn(1, 0, 1, 0)
+       # learn(1, 0, 1, 0)
         
         
-        learn(1, 1, 1, 1)    
+    #    learn(1, 1, 1, 1)    
