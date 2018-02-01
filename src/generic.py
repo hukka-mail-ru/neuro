@@ -117,6 +117,8 @@ if __name__ == '__main__': # pragma: no cover
     
     neurons = iNeurons + hNeurons + oNeurons
     
+    
+    '''
     for i in iNeurons:
         for h in hNeurons:
             f = sinaps.Sinaps("f", random.random() / 2)
@@ -128,7 +130,7 @@ if __name__ == '__main__': # pragma: no cover
             w = sinaps.Sinaps("w", random.random() / 2)
             h.addOutSinaps(w)
             o.addInSinaps(w)
-     
+    ''' 
           
     for x in range(1, 200):
     
@@ -156,8 +158,9 @@ if __name__ == '__main__': # pragma: no cover
     ''' output ''' 
      
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
-    
+    screen = pygame.display.set_mode((600, 400))
+  #  screen.fill([255,255,255])
+   # pygame.display.update()
 
 
     for n in neurons:
@@ -191,5 +194,5 @@ if __name__ == '__main__': # pragma: no cover
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN:
                 done = True 
