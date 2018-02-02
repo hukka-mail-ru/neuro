@@ -4,9 +4,10 @@ Created on Jan 31, 2018
 @author: hukka
 '''
 
-import pygame
+
 import random
 
+import show
 import brain
 
  
@@ -186,26 +187,29 @@ if __name__ == '__main__': # pragma: no cover
              
     ''' output ''' 
      
-    pygame.init()
-    screen = pygame.display.set_mode((600, 400))
-  #  screen.fill([255,255,255])
-   # pygame.display.update()
-
+    g = show.Graphics()
+    #pygame.init()
+    #screen = pygame.display.set_mode((600, 400))
+    #  screen.fill([255,255,255])
+    # pygame.display.update()
+ 
 
     for n in neurons:
         
-        color = (255, 255, 255)
+        g.setColor(255, 255, 255)
         if n.getName() == "i":
-            color = (0, 0, 255)
+            g.setColor(0, 0, 255)
         elif n.getName() == "h":   
-            color = (255, 0, 0)
+            g.setColor(255, 0, 0)
         elif n.getName() == "o":   
-            color = (0, 255, 0)  
+            g.setColor(0, 255, 0)  
             
-        (x, y) = n.getPos()
-       # pygame.draw.rect(screen, color, pygame.Rect(x, y, 10, 10))
-        pygame.draw.circle(screen, color, n.getPos(), 10)
-        pygame.draw.circle(screen, (255,255,255), (x-4,y-4), 2)
+
+
+        g.drawBall(n.getPos())
+
+
+        #  pygame.draw.circle(screen, (255,255,255), (x-5,y-1), 1)
         for s in n.getOutSinapses():
             if s.getWeight() < 0:
                 color = (10, 10, 10)
@@ -214,15 +218,9 @@ if __name__ == '__main__': # pragma: no cover
             else:
                 color = (255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())      
       
-            pygame.draw.line(screen, color, s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
+            g.drawLine(s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
 
+    g.flip()
     
-    pygame.display.flip()
+    g.waitForKey()
 
-    done = False
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
-            if event.type == pygame.KEYDOWN:
-                done = True 
