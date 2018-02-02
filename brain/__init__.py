@@ -27,7 +27,6 @@ class Brain():
         self.hNeurons = [] 
         self.oNeurons = []   
         
-        self.neurons = []  
     
     def create(self, i_num: int, h_num: int, o_num: int):
         self.iNeurons = self.createNeurons(Neuron.Kind.I, i_num) 

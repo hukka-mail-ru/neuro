@@ -33,7 +33,7 @@ if __name__ == '__main__': # pragma: no cover
     for trie in range(1, tries):
    
         brain.clear()
-        brain.create(2, 2, 2)
+        brain.create(2, 3, 2)
            
                   
         for x in range(1, 200):
