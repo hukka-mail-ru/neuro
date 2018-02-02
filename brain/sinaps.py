@@ -6,12 +6,9 @@ Created on Jan 31, 2018
 
 class Sinaps():
     
-    def __init__(self, name, weight):  
+    def __init__(self, weight):  
         self.weight = weight
-        self.name = name
     
-    def getName(self):
-        return self.name
             
     def getWeight(self):
         return self.weight

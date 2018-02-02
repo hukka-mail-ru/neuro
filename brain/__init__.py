@@ -22,7 +22,7 @@ def createSinapsesBetween(xNeurons, yNeurons):
 
     for x in xNeurons:
         for y in yNeurons:
-            w = Sinaps("w", random.random() / 2)
+            w = Sinaps(random.random() / 2)
             x.addOutSinaps(w)
             y.addInSinaps(w)
             

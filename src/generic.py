@@ -31,7 +31,7 @@ if __name__ == '__main__': # pragma: no cover
    
    
         iNeurons = brain.createNeurons(brain.Neuron.Kind.I, 2) 
-        hNeurons = brain.createNeurons(brain.Neuron.Kind.H, 6)
+        hNeurons = brain.createNeurons(brain.Neuron.Kind.H, 4)
         oNeurons = brain.createNeurons(brain.Neuron.Kind.O, 2)  
                       
         neurons = iNeurons + hNeurons + oNeurons        
