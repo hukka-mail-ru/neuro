@@ -11,8 +11,6 @@ import show
 import brain
 
  
-      
- 
 
 if __name__ == '__main__': # pragma: no cover
 
@@ -24,7 +22,7 @@ if __name__ == '__main__': # pragma: no cover
     minX = 99999999
     maxX = 0
     
-    tries = 100
+    tries = 2
     
     av_min = 0
     av_max = 0
@@ -32,9 +30,9 @@ if __name__ == '__main__': # pragma: no cover
     for trie in range(1, tries):
    
    
-        iNeurons = brain.createNeurons(100, "i", 2) 
-        hNeurons = brain.createNeurons(200, "h", 4)
-        oNeurons = brain.createNeurons(300, "o", 2)  
+        iNeurons = brain.createNeurons(brain.Neuron.Kind.I, 2) 
+        hNeurons = brain.createNeurons(brain.Neuron.Kind.H, 6)
+        oNeurons = brain.createNeurons(brain.Neuron.Kind.O, 2)  
                       
         neurons = iNeurons + hNeurons + oNeurons        
         
@@ -63,7 +61,7 @@ if __name__ == '__main__': # pragma: no cover
             err2 = brain.learn(hNeurons, oNeurons, n)    
              
              
-            if(err1 < 0.05 and err2 < 0.05):
+            if(err1 < 0.02 and err2 < 0.02):
                 
                 if(x < minX):
                     minX = x

@@ -41,10 +41,10 @@ class Sinaps():
     
     def draw(self, graphics):
         if self.weight < 0:
-            graphics.setColor(10, 10, 10)
+            graphics.setColor((10, 10, 10))
         elif self.weight > 1:
-            graphics.setColor(255, 255, 255)
+            graphics.setColor((255, 255, 255))
         else:
-            graphics.setColor(255 * self.weight, 255 * self.weight, 255 * self.weight)      
+            graphics.setColor((255 * self.weight, 255 * self.weight, 255 * self.weight))      
 
         graphics.drawLine(self.startNeuron.getPos(), self.endNeuron.getPos())

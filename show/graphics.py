@@ -22,9 +22,8 @@ class Graphics():
     def drawLine(self, pos1, pos2):    
         pygame.draw.line(self.screen, self.color, pos1, pos2)    
         
-    def setColor(self, r, g, b):
-        self.color = (r, g, b)       
-        
+    def setColor(self, color):
+        self.color = color       
         
     def flip(self):        
         pygame.display.flip()   

@@ -3,13 +3,15 @@ from brain.sinaps import Sinaps
 
 import random
 
-def createNeurons(offset, name, number):
+
+
+
+def createNeurons(kind: Neuron.Kind, number):
     
     neurons = []
     
     for x in range (0, number):
-        n = Neuron(name)        
-        n.setPos(offset, 10 + 50*x)                
+        n = Neuron(kind, x)                      
         neurons.append(n)
      
     return neurons   

@@ -4,23 +4,47 @@ Created on Jan 31, 2018
 @author: hukka
 '''
 import math
+import enum
 
 
 def sigmoid(x: float):
     return 1.0 / (1.0 + math.exp(-x))
 
 
+
+
 class Neuron():
     
-    def __init__(self, name):        
+    class Kind(enum.Enum):
+        I = 1
+        H = 2
+        O = 3
+    
+    def __init__(self, kind: Kind, number):        
         self.value = 0
         self.b = 0
         self.inSinapses = []
         self.outSinapses = []
-        self.name = name
+        self.kind = kind
+        
+        if self.kind == Neuron.Kind.I:
+            self.x = 100
+            self.color = (0, 0, 255)
+            
+        elif self.kind == Neuron.Kind.H:   
+            self.x = 200
+            self.color = (255, 0, 0)
+            
+        elif self.kind == Neuron.Kind.O:   
+            self.x = 300
+            self.color = (0, 255, 0) 
+            
+        self.y = 10 + 50 * number
+        
+            
 
-    def getName(self):
-        return self.name
+    def getKind(self):
+        return self.kind
     
     def setValue(self, v: float):
         self.value = v
@@ -82,12 +106,5 @@ class Neuron():
     
     
     def  draw(self, graphics):
-        graphics.setColor(255, 255, 255)
-        if self.name == "i":
-            graphics.setColor(0, 0, 255)
-        elif self.name == "h":   
-            graphics.setColor(255, 0, 0)
-        elif self.name == "o":   
-            graphics.setColor(0, 255, 0)  
-            
+        graphics.setColor(self.color)           
         graphics.drawBall((self.x, self.y))
