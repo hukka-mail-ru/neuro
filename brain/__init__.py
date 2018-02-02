@@ -1,7 +1,30 @@
 from brain.neuron import Neuron
 from brain.sinaps import Sinaps
 
+import random
 
+def createNeurons(offset, name, number):
+    
+    neurons = []
+    
+    for x in range (0, number):
+        n = Neuron(name)        
+        n.setPos(offset, 10 + 50*x)                
+        neurons.append(n)
+     
+    return neurons   
+
+
+
+def createSinapsesBetween(xNeurons, yNeurons):
+
+    for x in xNeurons:
+        for y in yNeurons:
+            w = Sinaps("w", random.random() / 2)
+            x.addOutSinaps(w)
+            y.addInSinaps(w)
+            
+            
 
 def learn(hNeurons, oNeurons, n):
     
@@ -77,3 +100,5 @@ def learn(hNeurons, oNeurons, n):
         for s in h.getOutSinapses():   
      
             s.setWeight(s.getWeight() - n * s.getDs())
+            
+    return Etotal        
