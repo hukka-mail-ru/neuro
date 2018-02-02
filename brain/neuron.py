@@ -79,3 +79,15 @@ class Neuron():
  
     def getDelta(self):
         return (self.value - self.target) * self.value * (1 - self.value)
+    
+    
+    def  draw(self, graphics):
+        graphics.setColor(255, 255, 255)
+        if self.name == "i":
+            graphics.setColor(0, 0, 255)
+        elif self.name == "h":   
+            graphics.setColor(255, 0, 0)
+        elif self.name == "o":   
+            graphics.setColor(0, 255, 0)  
+            
+        graphics.drawBall((self.x, self.y))

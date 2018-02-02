@@ -187,32 +187,15 @@ if __name__ == '__main__': # pragma: no cover
              
     ''' output ''' 
      
-    g = show.Graphics()
+    graphics = show.Graphics()
 
-    for n in neurons:
-        
-        g.setColor(255, 255, 255)
-        if n.getName() == "i":
-            g.setColor(0, 0, 255)
-        elif n.getName() == "h":   
-            g.setColor(255, 0, 0)
-        elif n.getName() == "o":   
-            g.setColor(0, 255, 0)  
+    for n in neurons:                
+        n.draw(graphics)        
+
+        for s in n.getOutSinapses():            
+            s.draw(graphics)
             
 
-        g.drawBall(n.getPos())
-
-
-        for s in n.getOutSinapses():
-            if s.getWeight() < 0:
-                g.setColor(10, 10, 10)
-            elif s.getWeight() > 1:
-                g.setColor(255, 255, 255)
-            else:
-                g.setColor(255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())      
-      
-            g.drawLine(s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
-
-    g.flip()    
-    g.waitForKey()
+    graphics.flip()    
+    graphics.waitForKey()
 
