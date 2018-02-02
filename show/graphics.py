@@ -35,6 +35,9 @@ class Graphics():
                 if event.type == pygame.QUIT:
                     done = True
                 if event.type == pygame.KEYDOWN:
-                    done = True  
-                    
+                    done = True
+                      
+    def clearScreen(self):                    
         self.screen.fill((0,0,0))
+        
+        
