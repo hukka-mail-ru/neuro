@@ -3,6 +3,7 @@ Created on Jan 31, 2018
 
 @author: hukka
 '''
+import brain
 
 class Sinaps():
     
@@ -36,12 +37,11 @@ class Sinaps():
     def getDs(self):
         return self.ds
     
+    
     def draw(self, graphics):
-        if self.weight < 0:
-            graphics.setColor((10, 10, 10))
-        elif self.weight > 1:
-            graphics.setColor((255, 255, 255))
-        else:
-            graphics.setColor((255 * self.weight, 255 * self.weight, 255 * self.weight))      
-
-        graphics.drawLine(self.startNeuron.getPos(), self.endNeuron.getPos())
+        
+        k = brain.sigmoid(self.weight)
+                
+        if(k > 0.5):
+            graphics.setColor((255 * k, 255 * k, 255 * k))         
+            graphics.drawLine(self.startNeuron.getPos(), self.endNeuron.getPos())

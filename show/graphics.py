@@ -36,3 +36,5 @@ class Graphics():
                     done = True
                 if event.type == pygame.KEYDOWN:
                     done = True  
+                    
+        self.screen.fill((0,0,0))

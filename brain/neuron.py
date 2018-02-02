@@ -3,14 +3,9 @@ Created on Jan 31, 2018
 
 @author: hukka
 '''
-import math
+
 import enum
-
-
-def sigmoid(x: float):
-    return 1.0 / (1.0 + math.exp(-x))
-
-
+import brain
 
 
 class Neuron():
@@ -99,7 +94,7 @@ class Neuron():
         net = self.b
         for sinaps in self.inSinapses:
             net += sinaps.getWeight() * sinaps.getStartNeuron().getValue()    
-        self.value = sigmoid(net)
+        self.value = brain.sigmoid(net)
  
     def getDelta(self):
         return (self.value - self.target) * self.value * (1 - self.value)

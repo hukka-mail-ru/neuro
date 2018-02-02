@@ -2,7 +2,10 @@ from brain.neuron import Neuron
 from brain.sinaps import Sinaps
 
 import random
+import math
 
+def sigmoid(x: float):
+    return 1.0 / (1.0 + math.exp(-x))
 
 
 
@@ -28,7 +31,7 @@ def createSinapsesBetween(xNeurons, yNeurons):
             
             
 
-def learn(hNeurons, oNeurons, n):
+def learn(hNeurons, oNeurons, learningSpeed: float):
     
 
     
@@ -97,10 +100,10 @@ def learn(hNeurons, oNeurons, n):
         
         for s in h.getInSinapses():
             
-            s.setWeight(s.getWeight() - n * s.getDs())
+            s.setWeight(s.getWeight() - learningSpeed * s.getDs())
             
         for s in h.getOutSinapses():   
      
-            s.setWeight(s.getWeight() - n * s.getDs())
+            s.setWeight(s.getWeight() - learningSpeed * s.getDs())
             
     return Etotal        
