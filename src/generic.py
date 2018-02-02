@@ -26,19 +26,19 @@ def learn():
     
     for h in hNeurons: 
         h.calcValue()
-        print("h.value", h.getValue())
+        #print("h.value", h.getValue())
 
     for o in oNeurons: 
         o.calcValue()
-        print("o.value", o.getValue())
+        #print("o.value", o.getValue())
     
     Etotal = 0
     for o in oNeurons:
         Etotal += 1/2 * (o.getTarget() - o.getValue())**2
     
-    print("Etotal",Etotal)
+    #print("Etotal",Etotal)
       
-   # print("learn ", i1v, i2v, "->", target_o1, target_o2)  
+    # print("learn ", i1v, i2v, "->", target_o1, target_o2)  
     print("----------------")
     for o in oNeurons: 
         print("out_o %.2f" % o.getValue())
@@ -48,26 +48,26 @@ def learn():
         
     # backpropagate 
     
-   # delta_o1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1)
-  #  delta_o2 = (out_o2 - target_o2) * out_o2 * (1 - out_o2)
+    # delta_o1 = (out_o1 - target_o1) * out_o1 * (1 - out_o1)
+    #  delta_o2 = (out_o2 - target_o2) * out_o2 * (1 - out_o2)
     
-   # dEtotal_dout_h1 = delta_o1 * w5.getWeight() + delta_o2 * w7.getWeight()
-   # dEtotal_dout_h2 = delta_o1 * w7.getWeight() + delta_o2 * w8.getWeight()
+    # dEtotal_dout_h1 = delta_o1 * w5.getWeight() + delta_o2 * w7.getWeight()
+    # dEtotal_dout_h2 = delta_o1 * w7.getWeight() + delta_o2 * w8.getWeight()
     
-    print("getDelta " , oNeurons[0].getDelta())
-    print("getDelta " , oNeurons[1].getDelta())
+    #print("getDelta " , oNeurons[0].getDelta())
+    #print("getDelta " , oNeurons[1].getDelta())
     
     for h in hNeurons:
         dEtotal_dout = 0
         for s in h.getOutSinapses():  
             dEtotal_dout += s.getEndNeuron().getDelta() * s.getWeight()
-            print("delta " , s.getEndNeuron().getDelta())
-            print("* w " , s.getWeight())
-            print("res" , )
+            #print("delta " , s.getEndNeuron().getDelta())
+            #print("* w " , s.getWeight())
+            #print("res" , )
         h.setdEtotal_dout(dEtotal_dout)
      
-    print("dEtotal_dout_h1 " , hNeurons[0].getdEtotal_dout())
-    print("dEtotal_dout_h1 " , hNeurons[1].getdEtotal_dout()) 
+    #print("dEtotal_dout_h1 " , hNeurons[0].getdEtotal_dout())
+    #print("dEtotal_dout_h1 " , hNeurons[1].getdEtotal_dout()) 
      
     for h in hNeurons:
         
@@ -188,11 +188,6 @@ if __name__ == '__main__': # pragma: no cover
     ''' output ''' 
      
     g = show.Graphics()
-    #pygame.init()
-    #screen = pygame.display.set_mode((600, 400))
-    #  screen.fill([255,255,255])
-    # pygame.display.update()
- 
 
     for n in neurons:
         
@@ -205,22 +200,19 @@ if __name__ == '__main__': # pragma: no cover
             g.setColor(0, 255, 0)  
             
 
-
         g.drawBall(n.getPos())
 
 
-        #  pygame.draw.circle(screen, (255,255,255), (x-5,y-1), 1)
         for s in n.getOutSinapses():
             if s.getWeight() < 0:
-                color = (10, 10, 10)
+                g.setColor(10, 10, 10)
             elif s.getWeight() > 1:
-                color = (255, 255, 255)
+                g.setColor(255, 255, 255)
             else:
-                color = (255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())      
+                g.setColor(255 * s.getWeight(), 255 * s.getWeight(), 255 * s.getWeight())      
       
             g.drawLine(s.getStartNeuron().getPos(), s.getEndNeuron().getPos())
 
-    g.flip()
-    
+    g.flip()    
     g.waitForKey()
 
