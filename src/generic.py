@@ -15,6 +15,7 @@ import brain
 if __name__ == '__main__': # pragma: no cover
 
     graphics = show.Graphics()
+    brain = brain.Brain()
     
     b1 = .35
     b2 = 0.60            
@@ -31,36 +32,21 @@ if __name__ == '__main__': # pragma: no cover
    
     for trie in range(1, tries):
    
-   
-        iNeurons = brain.createNeurons(brain.Neuron.Kind.I, 2) 
-        hNeurons = brain.createNeurons(brain.Neuron.Kind.H, 4)
-        oNeurons = brain.createNeurons(brain.Neuron.Kind.O, 2)  
-                      
-        neurons = iNeurons + hNeurons + oNeurons        
-        
-        brain.createSinapsesBetween(iNeurons, hNeurons)
-        brain.createSinapsesBetween(hNeurons, oNeurons)
-          
+        brain.clear()
+        brain.create(2, 2, 2)
+           
                   
         for x in range(1, 200):
         
-            print("ONE", x)
-            iNeurons[0].setValue(1)
-            iNeurons[1].setValue(1)
+            print("ONE", x)            
+            brain.teach([1,1], [0,1])       
+            err1 = brain.learn(learningSpeed)
             
-            oNeurons[0].setTarget(0)
-            oNeurons[1].setTarget(1)
-                    
-            err1 = brain.learn(hNeurons, oNeurons, learningSpeed)
             
-            print("TWO", x)
-            iNeurons[0].setValue(1)
-            iNeurons[1].setValue(0)
-            
-            oNeurons[0].setTarget(1)
-            oNeurons[1].setTarget(0)
-                    
-            err2 = brain.learn(hNeurons, oNeurons, learningSpeed)    
+            print("TWO", x)                        
+            brain.teach([1,0], [1,0])      
+            err2 = brain.learn(learningSpeed)    
+             
              
              
             if(err1 < 0.02 and err2 < 0.02):
@@ -81,12 +67,7 @@ if __name__ == '__main__': # pragma: no cover
         ''' output ''' 
          
     
-    
-        for n in neurons:                
-            n.draw(graphics)        
-    
-            for s in n.getOutSinapses():            
-                s.draw(graphics)
+        brain.draw(graphics)
                 
     
         graphics.flip()    
