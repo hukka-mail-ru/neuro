@@ -35,14 +35,16 @@ if __name__ == '__main__': # pragma: no cover
         brain.clear()
         brain.create(2, 4, 2)
            
-                   
+         
+       
         for x in range(1, 200):
-        
-            print("\nONE", x)            
+            
+            print("\n==================================" )  
+            print("ONE", x)            
             brain.teach([0,1], [0,1])       
             err1 = brain.learn(learningSpeed)
             
-            
+             
             print("TWO", x)                        
             brain.teach([1,0], [0,1])      
             err2 = brain.learn(learningSpeed)    
@@ -57,19 +59,10 @@ if __name__ == '__main__': # pragma: no cover
             err4 = brain.learn(learningSpeed)  
              
             if(err1 < 0.02 and err2 < 0.02 and err3 < 0.02  and err4 < 0.02 ):
-                
-                if(x < minX):
-                    minX = x
-                    av_min += x
-    
-                if(x > maxX):
-                    maxX = x
-                    av_max += x
-                
+                                
                 break 
-             
-        print("minX", minX)     
-        print("maxX", maxX)     
+          
+        print("\n==================================" )        
                  
         ''' output ''' 
          
@@ -79,5 +72,14 @@ if __name__ == '__main__': # pragma: no cover
     
         graphics.flip()    
         graphics.waitForKey()
+        
+        
+        #brain.deleteUselessSinapses()
+        print("\ndeleted" ) 
+        
+        
+        graphics.waitForKey()
+        
+        
         graphics.clearScreen()
 

@@ -8,7 +8,21 @@ def sigmoid(x: float):
     return 1.0 / (1.0 + math.exp(-x))
 
 
+
+
 class Brain():
+    
+    
+    def deleteUselessSinapses(self):
+    
+        neurons = self.iNeurons + self.hNeurons + self.oNeurons
+    
+        for n in neurons:
+            
+            n.deleteUselessSinapses()
+            
+                    
+    
     
     def teach(self, inputValues, targetValues):
         
@@ -92,11 +106,9 @@ class Brain():
         
         #print("Etotal",Etotal)
           
-        # print("learn ", i1v, i2v, "->", target_o1, target_o2)  
-        print("----------------")
+        # print("learn ", i1v, i2v, "->", target_o1, target_o2)  )
         for o in self.oNeurons: 
-            print("out_o %.2f" % o.getValue())
-        print("----------------")    
+            print("out_o %.2f" % o.getValue())   
         print("Etotal %.8f" % Etotal)
         
             

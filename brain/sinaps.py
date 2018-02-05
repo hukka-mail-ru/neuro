@@ -5,6 +5,9 @@ Created on Jan 31, 2018
 '''
 import brain
 
+DIE_THRESHOLD = 0.5 #
+
+
 class Sinaps():
     
     def __init__(self, weight):  
@@ -39,9 +42,14 @@ class Sinaps():
     
     
     def draw(self, graphics):
-        
+         
         k = brain.sigmoid(self.weight)
-                
-        if(k > 0.5):
+               
+        if not self.isUseless():
             graphics.setColor((255 * k, 255 * k, 255 * k))         
             graphics.drawLine(self.startNeuron.getPos(), self.endNeuron.getPos())
+            
+            
+    def isUseless(self):
+        
+        return brain.sigmoid(self.weight) < DIE_THRESHOLD

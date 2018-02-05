@@ -100,6 +100,22 @@ class Neuron():
         return (self.value - self.target) * self.value * (1 - self.value)
     
     
-    def  draw(self, graphics):
+    def draw(self, graphics):
         graphics.setColor(self.color)           
         graphics.drawBall((self.x, self.y))
+        
+    
+    def deleteUselessSinapses(self):
+    
+        for sinaps in self.inSinapses:
+            
+            if sinaps.isUseless():
+            
+                self.inSinapses.remove(sinaps)
+                
+                
+        for sinaps in self.outSinapses:
+            
+            if sinaps.isUseless():
+            
+                self.inSinapses.remove(sinaps)        
