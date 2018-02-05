@@ -33,12 +33,13 @@ if __name__ == '__main__': # pragma: no cover
     for trie in range(1, tries):
    
         brain.clear()
-        brain.create(2, 4, 2)
+        brain.create(4, 2, 4)
            
          
        
-        for x in range(1, 200):
+        for x in range(1, 2000):
             
+            '''
             print("\n==================================" )  
             print("ONE", x)            
             brain.teach([0,1], [0,1])       
@@ -57,7 +58,16 @@ if __name__ == '__main__': # pragma: no cover
             print("FOUR", x)                        
             brain.teach([0,0], [0,0])      
             err4 = brain.learn(learningSpeed)  
-             
+            '''
+            
+            print("\n==================================" )  
+            print("ONE", x)            
+            err1 = brain.learn([0,1,0,1], [0,1,0,1], learningSpeed) 
+            err2 = brain.learn([0,0,0,1], [0,0,0,1], learningSpeed) 
+            err3 = brain.learn([1,1,0,1], [1,1,0,1], learningSpeed) 
+            err4 = brain.learn([1,1,1,1], [1,1,1,1], learningSpeed)
+
+                
             if(err1 < 0.02 and err2 < 0.02 and err3 < 0.02  and err4 < 0.02 ):
                                 
                 break 
@@ -74,11 +84,7 @@ if __name__ == '__main__': # pragma: no cover
         graphics.waitForKey()
         
         
-        #brain.deleteUselessSinapses()
-        print("\ndeleted" ) 
-        
-        
-        graphics.waitForKey()
+
         
         
         graphics.clearScreen()

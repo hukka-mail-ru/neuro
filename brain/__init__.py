@@ -22,19 +22,6 @@ class Brain():
             n.deleteUselessSinapses()
             
                     
-    
-    
-    def teach(self, inputValues, targetValues):
-        
-        i = 0
-        for x in inputValues:
-            self.iNeurons[i].setValue(x)
-            i += 1
-
-        o = 0
-        for y in targetValues:
-            self.oNeurons[o].setTarget(y)
-            o += 1 
 
     def clear(self):
         self.iNeurons = [] 
@@ -85,9 +72,17 @@ class Brain():
                 s.draw(graphics)    
                     
 
-    def learn(self, learningSpeed: float):
+    def learn(self, inputValues, targetValues, learningSpeed: float):
         
-    
+        i = 0
+        for x in inputValues:
+            self.iNeurons[i].setValue(x)
+            i += 1
+
+        o = 0
+        for y in targetValues:
+            self.oNeurons[o].setTarget(y)
+            o += 1   
         
         #i1.setValue(i1v)
         #i2.setValue(i2v)
